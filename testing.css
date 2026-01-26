@@ -667,6 +667,11 @@
         pointer-events: none;
     }
 
+    #reviews .section-header {
+        margin-top: 1.5em;
+        margin-bottom: 0;
+    }
+
     .reviews-wrapper {
         width: 100%;
         overflow-x: auto;
