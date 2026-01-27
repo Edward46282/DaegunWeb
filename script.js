@@ -86,5 +86,40 @@ document.addEventListener('DOMContentLoaded', () => {
         let items = document.querySelectorAll(".item");
         document.querySelector(".slide").prepend(items[items.length - 1]);
     });
+
+    // 네비게이션 버튼으로 캐러셀 스크롤
+
+    const carousel = document.querySelector('.work-carousel');
+    const nextBtn = document.querySelector('.next-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+
+    const scrollAmount = 370; 
+
+    if (carousel && nextBtn && prevBtn) {
+        const updateButtonState = () => {
+            prevBtn.disabled = carousel.scrollLeft <= 0;
+
+            const isAtEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
+            nextBtn.disabled = isAtEnd;
+        };
+        
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({ 
+                left: scrollAmount, 
+                behavior: 'smooth' 
+            });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({ 
+                left: -scrollAmount, 
+                behavior: 'smooth' 
+            });
+        });
+
+        carousel.addEventListener('scroll', updateButtonState);
+
+        updateButtonState();
+    }
 });
 
