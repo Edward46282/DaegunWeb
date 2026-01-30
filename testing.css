@@ -56,7 +56,7 @@
         z-index: 9999;
         transform: translate(-50%, -50%);
         transition: width 0.3s var(--easing), height 0.3s var(--easing), background-color 0.3s, border-color 0.3s;
-        display: none; /* Hidden on mobile by default */
+        display: none; 
     }
 
     .material-symbols-outlined {
@@ -76,9 +76,7 @@
         50% { transform: translate(-50%, 10px); }
     }
 
-    /* --- 3. COMPONENT STYLES --- */
-
-    /* Navigation Dots */
+    /* 우측 navbar */
     .nav-container {
         position: fixed;
         right: 2rem;
@@ -133,9 +131,8 @@
         background-color: var(--primary);
     }
 
-    /* --- 4. SECTIONS --- */
+    /* --- 섹션 --- */
 
-    /* Section Generic */
     section {
         width: 100%;
         height: 100vh;
