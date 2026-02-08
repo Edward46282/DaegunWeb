@@ -72,10 +72,10 @@
     }
     
     @keyframes bounce {
-        0%, 100% { transform: translate(-50%, 0); }
-        50% { transform: translate(-50%, 10px); }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(10px); }
     }
-
+    
     /* --- Navbar --- */
 
     .navbar {
@@ -295,10 +295,10 @@
 
     .scroll-indicator {
         position: absolute;
+        width: max-content;
         bottom: 2.5rem;
         left: 50%;
         transform: translateX(-50%);
-        width: max-content;
         z-index: 10;
         color: var(--text-muted);
         animation: bounce 2s infinite;
