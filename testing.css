@@ -76,7 +76,95 @@
         50% { transform: translate(-50%, 10px); }
     }
 
-    /* 우측 navbar */
+    /* --- Navbar --- */
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4%;
+        z-index: 1000;
+        background: rgba(10, 10, 10, 0.8); 
+        backdrop-filter: blur(12px); 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-brand {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--text-white);
+        flex-shrink: 0;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 2.5rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: var(--text-white);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary);
+        transition: width 0.3s var(--easing);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    .get-started-btn {
+        background-color: var(--text-white);
+        color: var(--bg-dark);
+        padding: 0.8rem 1.8rem;
+        border-radius: 9999px; 
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: transform 0.2s, background-color 0.2s;
+        white-space: nowrap;
+    }
+
+    .get-started-btn:hover {
+        transform: scale(1.5);
+        background-color: var(--primary);
+        color: white;
+    }
+
+    @media (max-width: 900px) {
+        .nav-menu {
+            display: none; 
+        }
+    }
+
+
+    /* 우측 navbar 
     .nav-container {
         position: fixed;
         right: 2rem;
@@ -130,6 +218,7 @@
         border-color: var(--primary);
         background-color: var(--primary);
     }
+        */
 
     /* --- 섹션 --- */
 
@@ -863,7 +952,7 @@
     }
 
 
-    /* RESPONSIVE MEDIA QUERIES */
+    /* 스크린 사이즈 설정 */
     @media (min-width: 768px) {
         .project-card { width: 600px; }
         .services-grid { grid-template-columns: repeat(3, 1fr); }
@@ -871,9 +960,10 @@
     }
 
     @media (max-width: 768px) {
-        /* Restore default cursor on mobile */
         * { cursor: auto; }
         .custom-cursor { display: none !important; }
         .nav-container { right: 1rem; }
         .nav-label { display: none; }
     }
+
+    

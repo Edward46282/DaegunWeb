@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 페이지</title>
+    <link rel="stylesheet" href="testing.css">
+    <link rel="stylesheet" href="contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <script src="contact.js" defer></script>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    <div class="custom-cursor"></div>
+
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="brand-text">대건명가</span> 
+        </div>
+
+        <nav class="nav-menu">
+            <a href="index.html#home" class="nav-link">홈</a>
+            <a href="index.html#gallery" class="nav-link">갤러리</a>
+            <a href="index.html#work" class="nav-link">제품</a>
+            <a href="index.html#services" class="nav-link">서비스</a>
+            <a href="index.html#reviews" class="nav-link">리뷰</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="#contact" class="get-started-btn interactive">문의하기</a>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="glow-blob glow-contact-orange"></div>
+        
+        <div class="page-header">
+            <h1 class="page-title">질문 있으신가요?</h1>
+            <p class="page-subtitle">고민말고 연락주세요!</p>
+        </div>
+
+        <div class="contact-layout">
+            <div class="contact-info">
+                <h3>연락처</h3>
+                
+                <a href="tel:+821000000000" class="info-item interactive">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">call</span>
+                    <div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase;">전화번호</div>
+                        <div style="color: #fff;">+82 010-0000-0000</div>
+                    </div>
+                </a>
+
+                <a href="mailto:example@gmail.com" class="info-item interactive">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">mail</span>
+                    <div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase;">이메일</div>
+                        <div style="color: #fff;">example@gmail.com</div>
+                    </div>
+                </a>
+
+                <a href="https://naver.me/FA2gOd7R" target="_blank" class="info-item interactive">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">location_on</span>
+                    <div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase;">위치</div>
+                        <div style="color: #fff;">부산 연제구 중앙대로</div>
+                    </div>
+                </a>
+            </div>
+
+            <form class="form-box">
+                <div class="form-group">
+                    <label class="form-label" for="name">이름 <span class="required-area">*</span></label>
+                    <input type="text" id="name" name="name" class="form-input interactive" placeholder="홍길동" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="phone">전화번호</label>
+                    <input type="tel" id="phone" name="phone" class="form-input interactive" placeholder="+82 010 0000 0000">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">이메일 주소 <span class="required-area">*</span></label>
+                    <input type="email" id="email" name="email" class="form-input interactive" placeholder="example@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="message">메세지</label>
+                    <textarea id="message" name="message" class="form-textarea interactive" rows="7" cols = "30" placeholder="이 제품에 대해서 궁금한 게 있습니다..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">파일 첨부하기</label>
+                    <div class="file-upload-wrapper interactive">
+                        <input type="file">
+                        <div class="file-upload-text">
+                            <span class="material-symbols-outlined">cloud_upload</span>
+                            <span>클릭하거나 파일을 드래그</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn interactive">제출</button>
+            </form>
+        </div>
+        <div id="custom-notification" class="notification">
+            Message goes here
+        </div>
+    </div>
+</body>
+</html>

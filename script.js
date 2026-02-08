@@ -44,7 +44,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 우측 nav bar 섹션
+    // --- Navbar Active State Handler ---
+
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: "-10% 0px -10% 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => link.classList.remove('active'));
+
+                const id = entry.target.getAttribute('id');
+                const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+
+                if(activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    /* 우측 nav bar 섹션
 
     const sections = document.querySelectorAll('section');
     const navDots = document.querySelectorAll('.nav-dot');
@@ -74,18 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
+    */
+
+    // 캐러셀 버튼
+
     let next = document.querySelector(".next");
     let prev = document.querySelector(".prev");
 
-    next.addEventListener("click", function () {
-        let items = document.querySelectorAll(".item");
-        document.querySelector(".slide").appendChild(items[0]);
-    });
+    if (next && prev) {
+        next.addEventListener("click", function () {
+            let items = document.querySelectorAll(".item");
+            document.querySelector(".slide").appendChild(items[0]);
+        });
 
-    prev.addEventListener("click", function () {
-        let items = document.querySelectorAll(".item");
-        document.querySelector(".slide").prepend(items[items.length - 1]);
-    });
+        prev.addEventListener("click", function () {
+            let items = document.querySelectorAll(".item");
+            document.querySelector(".slide").prepend(items[items.length - 1]);
+        });
+    }
 
     // 네비게이션 버튼으로 캐러셀 스크롤
 
