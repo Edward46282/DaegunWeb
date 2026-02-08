@@ -234,6 +234,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
 
     .hero-bg {
@@ -297,6 +298,7 @@
         bottom: 2.5rem;
         left: 50%;
         transform: translateX(-50%);
+        width: max-content;
         z-index: 10;
         color: var(--text-muted);
         animation: bounce 2s infinite;
