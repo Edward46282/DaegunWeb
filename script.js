@@ -73,53 +73,96 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    /* 우측 nav bar 섹션
+    // 스탯
+    const statsSection = document.querySelector('.stats-banner');
+    const counters = document.querySelectorAll('.big-number');
+    let started = false; 
 
-    const sections = document.querySelectorAll('section');
-    const navDots = document.querySelectorAll('.nav-dot');
+    if (statsSection && counters.length > 0) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    statsSection.classList.add('visible');
 
-    const observerOptions = {
-        threshold: 0.5 
-    };
+                    if (!started) {
+                        counters.forEach(counter => {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 500;
+                            const increment = target / (duration / 13); 
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                navDots.forEach(dot => {
-                    dot.querySelector('.dot-indicator').classList.remove('active');
-                });
-                
-                const id = entry.target.getAttribute('id');
-                const activeLink = document.querySelector(`a[href="#${id}"] .dot-indicator`);
-
-                if(activeLink) {
-                    activeLink.classList.add('active');
+                            let current = 0;
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    if (Math.floor(target) !== target) {
+                                        counter.innerText = current.toFixed(1);
+                                    } else {
+                                        counter.innerText = Math.ceil(current);
+                                    }
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target; 
+                                }
+                            };
+                            updateCounter();
+                        });
+                        started = true;
+                    }
                 }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% visible
+
+        statsObserver.observe(statsSection);
+    }
+    
+    // 갤러리
+    const gallerySection = document.querySelector('#gallery');
+    const galleryItems = document.querySelectorAll('.gallery-track .item');
+
+    if (gallerySection && galleryItems.length > 0) {
+        
+        window.addEventListener('scroll', () => {
+            const rect = gallerySection.getBoundingClientRect();
+            const sectionHeight = gallerySection.offsetHeight;
+            const windowHeight = window.innerHeight;
+            
+            // 갤러리 섹션 상단이 현재 뷰 상단에서 얼마나 스크롤되었는지 계산
+            const scrolled = -rect.top;
+            
+            if (scrolled < 0) {
+                updateGallery(0);
+                return;
             }
-        });
-    }, observerOptions);
+            if (scrolled > (sectionHeight - windowHeight)) {
+                // 유저가 섹션을 지났을 경우 마지막 이미지 표시
+                updateGallery(galleryItems.length - 1);
+                return;
+            }
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+            // 스크롤시 한계점 계산
+            const totalScrollableDistance = sectionHeight - windowHeight;
+            const stepSize = totalScrollableDistance / galleryItems.length;
+            let activeIndex = Math.floor(scrolled / stepSize);
 
-    */
+            if (activeIndex < 0) activeIndex = 0;
+            if (activeIndex >= galleryItems.length) activeIndex = galleryItems.length - 1;
 
-    // 캐러셀 버튼
-
-    let next = document.querySelector(".next");
-    let prev = document.querySelector(".prev");
-
-    if (next && prev) {
-        next.addEventListener("click", function () {
-            let items = document.querySelectorAll(".item");
-            document.querySelector(".slide").appendChild(items[0]);
+            updateGallery(activeIndex);
         });
 
-        prev.addEventListener("click", function () {
-            let items = document.querySelectorAll(".item");
-            document.querySelector(".slide").prepend(items[items.length - 1]);
-        });
+        function updateGallery(activeIndex) {
+            galleryItems.forEach((item, index) => {
+                item.classList.remove('active', 'prev', 'next', 'waiting');
+
+                if (index === activeIndex) {
+                    item.classList.add('active'); 
+                } else if (index < activeIndex) {
+                    item.classList.add('prev');  
+                } else {
+                    item.classList.add('waiting');
+                }
+            });
+        }
     }
 
     // 네비게이션 버튼으로 캐러셀 스크롤

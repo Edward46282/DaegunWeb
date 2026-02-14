@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>샘플 페이지</title>
+    <title>대건명가 B2B 홈페이지</title>
+    <link rel="icon" type="image/jpg" href="favicon.jpg">
     <link rel="stylesheet" href="testing.css">
     <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -31,36 +32,6 @@
             <a href="#contact" class="get-started-btn interactive">문의하기</a>
         </div>
     </header>
-
-    <!-- 
-    <nav class="nav-container">
-        <a class="nav-dot" href="#home">
-            <span class="nav-label">Home</span>
-            <div class="dot-indicator active"></div>
-        </a>
-        <a class="nav-dot" href="#gallery">
-            <span class="nav-label">Gallery</span>
-            <div class="dot-indicator"></div>
-        </a>
-        <a class="nav-dot" href="#work">
-            <span class="nav-label">제품</span>
-            <div class="dot-indicator"></div>
-        </a>
-        <a class="nav-dot" href="#services">
-            <span class="nav-label">서비스</span>
-            <div class="dot-indicator"></div>
-        </a>
-        <a class="nav-dot" href="#reviews">
-            <span class="nav-label">리뷰</span>
-            <div class="dot-indicator"></div>
-        </a>
-        <a class="nav-dot" href="#contact">
-            <span class="nav-label">Contact</span>
-            <div class="dot-indicator"></div>
-        </a>
-    </nav>
-
-    -->
     
 
     <section id="home">
@@ -80,95 +51,78 @@
         </div>
     </section>
 
-    <section id="gallery">
-        <div class="section-header">
-            <div class="line-accent"></div>
-            <h4 class="section-title-small">Gallery</h4>
-        </div>
+    <section class="stats-banner">
+        
+        <div class="glow-blob" style="opacity: 0.6; top:50%; left:50%;"></div>
 
-        <div class="container">
-            <div class="slide">
-                <div
-                class="item"
-                style="
-                    background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-                "
-                >
-                <div class="content">
-                    <div class="name">이미지 1</div>
-                    <div class="des">
-                        정보 1
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="star-rating-lockup">
+                    <span class="material-symbols-outlined big-star-icon">star</span>
+                    
+                    <div class="rating-text-stack">
+                        <div class="number-row">
+                            <span class="big-number" data-target="4.9">0.0</span>
+                            <span class="max-score">/ 5.0</span>
+                        </div>
                     </div>
-                    <a class="seeMore" target="_blank"
-                    href=""
-                    ><button>더 알아보기</button>
-                    </a>
-                </div>
-                </div>
-
-                <div
-                class="item"
-                style="
-                    background-image: url('https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-                "
-                >
-                <div class="content">
-                    <div class="name">이미지 2</div>
-                    <div class="des">
-                        정보 2
-                    </div>
-                    <a
-                    class="seeMore"
-                    target="_blank"
-                    href=""
-                    ><button>더 알아보기</button></a
-                    >
-                </div>
-                </div>
-
-                <div
-                class="item"
-                style="
-                    background-image: url('https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-                "
-                >
-                <div class="content">
-                    <div class="name">이미지 3</div>
-                    <div class="des">
-                        정보 3
-                    </div>
-                    <a
-                    class="seeMore"
-                    target="_blank"
-                    href=""
-                    ><button>더 알아보기</button></a
-                    >
-                </div>
-                </div>
-
-                <div
-                class="item"
-                style="
-                    background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-                "
-                >
-                <div class="content">
-                    <div class="name">이미지 4</div>
-                    <div class="des">
-                        정보 4
-                    </div>
-                    <a
-                    class="seeMore"
-                    target="_blank"
-                    href=""
-                    ><button>더 알아보기</button></a
-                    >
-                </div>
                 </div>
             </div>
-            <div class="button">
-                <button class="prev">◁</button>
-                <button class="next">▷</button>
+
+            <div class="stat-divider"></div>
+
+            <div class="stat-item">
+                <div class="review-lockup">
+                    <div class="number-row">
+                        <span class="big-number" data-target="11">0</span>
+                        <span class="accent-k">만+</span>
+                    </div>
+                    <p class="stat-label">네이버 리뷰</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="gallery-sticky-wrapper">
+            <div class="section-header">
+                <div class="line-accent"></div>
+                <h4 class="section-title-small">Gallery</h4>
+            </div>
+
+            <div class="gallery-track">
+                <div class="item active" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1074&auto=format&fit=crop');">
+                    <div class="content">
+                        <div class="name">이미지 1</div>
+                        <div class="des">정보 1</div>
+                        <button>더 알아보기</button>
+                    </div>
+                </div>
+
+                <div class="item next" style="background-image: url('https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=1173&auto=format&fit=crop');">
+                    <div class="content">
+                        <div class="name">이미지 2</div>
+                        <div class="des">정보 2</div>
+                        <button>더 알아보기</button>
+                    </div>
+                </div>
+
+                <div class="item waiting" style="background-image: url('https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=1170&auto=format&fit=crop');">
+                    <div class="content">
+                        <div class="name">이미지 3</div>
+                        <div class="des">정보 3</div>
+                        <button>더 알아보기</button>
+                    </div>
+                </div>
+
+                <div class="item waiting" style="background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="content">
+                        <div class="name">이미지 4</div>
+                        <div class="des">정보 4</div>
+                        <button>더 알아보기</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -390,17 +344,36 @@
     </section>
 
     <section id="contact">
-        <h1 class="section-title-small">지금바로</h1>
+        <div class="fluid-bg-container">
+            <div class="fluid-layer layer-1"></div>
+            <div class="fluid-layer layer-2"></div>
+            <div class="fluid-layer layer-3"></div>
+        </div>
         
-        <a href="contact.html" class="contact-trigger interactive">
-            <h2 class="contact-cta">문의하기<span style="color: var(--primary);">.</span></h2>
-            <div class="underline-anim"></div>
-        </a>
+        <div class="grain-overlay"></div> <div class="contact-content-wrapper">
+            <h1 style="color: var(--primary); letter-spacing: 0.2em;">지금바로</h1>
+            
+            <div class="button-wrapper relative">
+                
+                <span class="material-symbols-outlined modern-arrow arrow-left">
+                    keyboard_double_arrow_right
+                </span>
 
-        <div class="social-links">
-            <a href="#" class="interactive">Instagram</a>
-            <a href="#" class="interactive">LinkedIn</a>
-            <a href="#" class="interactive">Twitter</a>
+                <a href="contact.html" class="contact-button-container interactive">
+                    <h2 class="contact-cta">문의하기<span class="accent-dot">.</span></h2>
+                </a>
+
+                <span class="material-symbols-outlined modern-arrow arrow-right">
+                    keyboard_double_arrow_left
+                </span>
+
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="interactive">Instagram</a>
+                <a href="#" class="interactive">LinkedIn</a>
+                <a href="#" class="interactive">Twitter</a>
+            </div>
         </div>
     </section>
 </body>
