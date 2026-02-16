@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+
+        cursor.style.opacity = 1;
     });
 
     // 마우스 커서 애니메이션 함수

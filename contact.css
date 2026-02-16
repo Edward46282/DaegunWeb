@@ -6,10 +6,58 @@
     z-index: 10;
 }
 
-.glow-contact-orange {
-    top: 100px;
-    left: -30px;
-    background: rgba(252, 164, 124, 0.15); 
+.contact-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.7; 
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px); 
+    mix-blend-mode: screen; 
+    animation: floatOrb 20s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(255, 77, 0, 0.3) 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+/* Orb 2: Deep Purple/Blue for contrast */
+.orb-2 {
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(76, 29, 149, 0.25) 0%, transparent 70%);
+    bottom: -20%;
+    right: -30%;
+    animation-delay: -5s;
+}
+
+/* Orb 3: Secondary Highlight */
+.orb-3 {
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(255, 77, 0, 0.15) 0%, transparent 70%);
+    top: 40%;
+    left: 30%;
+    animation-delay: -10s;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0, 0) scale(1); }
 }
 
 .page-header {
@@ -103,6 +151,12 @@ input:user-invalid {
     gap: 0.5rem;
 }
 
+.form-group:hover .form-input,
+.form-group:hover .form-textarea {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
 .form-label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -130,41 +184,88 @@ input:user-invalid {
     background: rgba(0, 0, 0, 0.6);
 }
 
-/* 파일 업로드 영역 */
-.file-upload-wrapper {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+/* 개인정보 체크박스 */
+.checkbox-wrapper {
+    margin: 2rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.3s, background-color 0.3s;
-    overflow: hidden;
 }
 
-.file-upload-wrapper:hover {
-    border-color: var(--primary);
-    background-color: rgba(252, 164, 124, 0.05);
+.modern-checkbox {
+    display: none; 
 }
 
-.file-upload-wrapper input[type="file"] {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: none;
-    z-index: 10;
-}
-
-.file-upload-text {
+.checkbox-label {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    user-select: none;
+    gap: 12px;
+}
+
+.custom-check-box {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.check-icon {
+    font-size: 18px !important; 
+    font-weight: 800; 
+    color: var(--bg-dark);
+    transform: scale(0) rotate(-45deg); 
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7); 
+}
+
+.modern-checkbox:checked + .checkbox-label .custom-check-box {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(255, 77, 0, 0.4); 
+}
+
+.modern-checkbox:checked + .checkbox-label .custom-check-box .check-icon {
+    transform: scale(1) rotate(0deg); 
+    opacity: 1;
+}
+
+.checkbox-text {
+    font-size: 0.9rem;
     color: var(--text-muted);
-    pointer-events: none;
+}
+
+.checkbox-label:hover .checkbox-text {
+    color: white;
+}
+
+.checkbox-label:hover .custom-check-box {
+    border-color: rgba(255, 255, 255, 0.849);
+}
+.checkbox-text a {
+    color: var(--primary);
+    text-decoration: none;
+    position: relative;
+}
+
+.checkbox-text a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--primary);
+    transition: width 0.3s;
+}
+
+.checkbox-text a:hover::after {
+    width: 100%;
 }
 
 .submit-btn {

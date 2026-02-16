@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문의 페이지</title>
+    <title>대건명가 B2B 문의 페이지</title>
+    <link rel="icon" type="image/jpg" href="favicon.jpg">
     <link rel="stylesheet" href="testing.css">
     <link rel="stylesheet" href="contact.css">
     <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -34,8 +35,12 @@
     </header>
 
     <div class="page-container">
-        <div class="glow-blob glow-contact-orange"></div>
-        
+        <div class="contact-bg-animation">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
         <div class="page-header">
             <h1 class="page-title">질문 있으신가요?</h1>
             <p class="page-subtitle">고민말고 연락주세요!</p>
@@ -91,15 +96,15 @@
                     <textarea id="message" name="message" class="form-textarea interactive" rows="7" cols = "30" placeholder="이 제품에 대해서 궁금한 게 있습니다..."></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">파일 첨부하기</label>
-                    <div class="file-upload-wrapper interactive">
-                        <input type="file">
-                        <div class="file-upload-text">
-                            <span class="material-symbols-outlined">cloud_upload</span>
-                            <span>클릭하거나 파일을 드래그</span>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="privacy-consent" class="modern-checkbox" required>
+                    
+                    <label for="privacy-consent" class="checkbox-label">
+                        <div class="custom-check-box">
+                            <span class="material-symbols-outlined check-icon">check</span>
                         </div>
-                    </div>
+                        <span class="checkbox-text"><span style="font-weight: bold;">개인정보</span> 수집 및 이용에 동의합니다 <span class="required-area">*</span></span>
+                    </label>
                 </div>
 
                 <button type="submit" class="submit-btn interactive">제출</button>
