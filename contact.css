@@ -193,9 +193,15 @@ input:user-invalid {
 }
 
 .modern-checkbox {
-    display: none; 
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
 }
-
 .checkbox-label {
     display: flex;
     align-items: center;

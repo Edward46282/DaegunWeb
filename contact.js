@@ -1,6 +1,7 @@
 const scriptURL = 'https://script.google.com/macros/s/AKfycby3IamU2X_71jqvFKaTYzezjVPfH34Qi63qbuRMiEF9_re0gn11qxHQqXHh1pkS21mB/exec';
 const form = document.querySelector('form');
 const notification = document.getElementById('custom-notification');
+let submitCount = 3;
 
 function showNotification(message, isError = false) {
     notification.innerText = message;
@@ -21,6 +22,11 @@ if (form) {
     form.addEventListener('submit', e => {
         e.preventDefault();
 
+        if (submitCount <= 0) {
+            showNotification('제출 횟수를 초과했습니다. 나중에 다시 시도해주세요.', true);
+            return;
+        }
+
         const btn = form.querySelector('button');
         const originalText = btn.innerText;
         btn.innerText = '보내는 중...';
@@ -30,6 +36,7 @@ if (form) {
             .then(response => response.json())
             .then(response => {
                 if (response.result === 'success') {
+                    submitCount--;
                     showNotification('성공적으로 메시지가 전송되었습니다!'); 
                     form.reset();
                 } else {

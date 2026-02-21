@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Navbar Active State Handler ---
+    // --- Navbar 업데이트 ---
 
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 스탯
     const statsSection = document.querySelector('.stats-banner');
-    const counters = document.querySelectorAll('.big-number');
+    const counters = document.querySelectorAll('.stat-big-number');
     let started = false; 
 
     if (statsSection && counters.length > 0) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 네비게이션 버튼으로 캐러셀 스크롤
+    // 네비게이션 버튼으로 work class 캐러셀 스크롤
 
     const carousel = document.querySelector('.work-carousel');
     const nextBtn = document.querySelector('.next-btn');
@@ -201,5 +201,122 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateButtonState();
     }
+
+    // 서비스 2 스크롤 섹션
+
+    const section = document.querySelector('.horizontal-scroll-section');
+    const track = document.querySelector('.horizontal-track');
+    
+    if (section && track) {
+        window.addEventListener('scroll', () => {
+            const rect = section.getBoundingClientRect();
+            const scrollProgress = -rect.top;
+            const maxScroll = section.offsetHeight - window.innerHeight;
+            
+            if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
+                const percentage = scrollProgress / maxScroll;
+                const moveAmount = percentage * 200; 
+                track.style.transform = `translateX(-${moveAmount}vw)`;
+            } else if (scrollProgress < 0) {
+                track.style.transform = `translateX(0)`;
+            } else {
+                track.style.transform = `translateX(-200vw)`;
+            }
+        });
+    }
+
+    // 리뷰  캐러셀 
+    
+    const reviewTrack = document.querySelector('.review-track');
+    const reviewSlides = document.querySelectorAll('.review-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const reviewPrevBtn = document.querySelector('.review-carousel-container .prev-btn');
+    const reviewNextBtn = document.querySelector('.review-carousel-container .next-btn');
+
+    if (reviewTrack && reviewSlides.length > 0) {
+        const scrollToSlide = (index) => {
+            const slide = reviewSlides[index];
+            if (!slide) return;
+
+            const scrollAmount = slide.offsetLeft - (reviewTrack.clientWidth / 2) + (slide.offsetWidth / 2);
+            
+            reviewTrack.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        };
+
+        indicators.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                scrollToSlide(index);
+            });
+        });
+
+        if (reviewPrevBtn && reviewNextBtn) {
+            const getCiurrentIndex = () => {
+                const center = reviewTrack.scrollLeft + (reviewTrack.offsetWidth / 2);
+                let closestIndex = 0;
+                let minDistance = Infinity;
+
+                reviewSlides.forEach((slide, index) => {
+                    const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+                    const distance = Math.abs(center - slideCenter);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                return closestIndex;
+            };
+
+            reviewPrevBtn.addEventListener('click', () => {
+                const currentIndex = getCiurrentIndex();
+                if (currentIndex > 0) scrollToSlide(currentIndex - 1);
+            });
+
+            reviewNextBtn.addEventListener('click', () => {
+                const currentIndex = getCiurrentIndex();
+                if (currentIndex < reviewSlides.length - 1) scrollToSlide(currentIndex + 1);
+            });
+        }
+
+        const updateActiveReview = () => {
+            const center = reviewTrack.scrollLeft + (reviewTrack.offsetWidth / 2);
+            let closestIndex = 0;
+            let minDistance = Infinity;
+
+            reviewSlides.forEach((slide, index) => {
+                const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+                const distance = Math.abs(center - slideCenter);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            if (reviewPrevBtn && reviewNextBtn) {
+                reviewPrevBtn.style.display = closestIndex === 0 ? 'none' : '';
+                reviewNextBtn.style.display = closestIndex === reviewSlides.length - 1 ? 'none' : '';
+            }
+
+            reviewSlides.forEach((slide, index) => {
+                if (index === closestIndex) {
+                    slide.classList.add('active');
+                    if (indicators[index]) indicators[index].classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                    if (indicators[index]) indicators[index].classList.remove('active');
+                }
+            });
+        };
+
+        reviewTrack.addEventListener('scroll', () => {
+            window.requestAnimationFrame(updateActiveReview);
+        });
+        
+        updateActiveReview();
+    }
+    
 });
 
