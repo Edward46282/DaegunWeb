@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
 
     const observerOptions = {
-        threshold: 0.3,
+        threshold: 0.2,
         rootMargin: "-10% 0px -10% 0px"
     };
 
