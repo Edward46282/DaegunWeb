@@ -1245,7 +1245,6 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background-color: #000000; 
         height: 100vh;
         min-height: 600px;
     }
@@ -1255,36 +1254,36 @@
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: 0; 
         overflow: hidden;
+        background-color: #0a0014;
+        pointer-events: none;
     }
 
     .fluid-layer {
         position: absolute;
         border-radius: 50%;
-        mix-blend-mode: screen; 
+        mix-blend-mode: screen;
         will-change: transform;
-        filter: blur(60px); 
-        opacity: 0.8; 
     }
 
     .layer-1 {
         width: 100vw; height: 100vw;
-        top: -20%; left: -20%;
+        top: -20%; left: -30%;
         background: radial-gradient(circle, #ff4d00 0%, transparent 70%);
-        animation: flowBlob 20s infinite alternate ease-in-out;
+        animation: pulseBlob 14s infinite alternate ease-in-out;
     }
 
     .layer-2 {
         width: 90vw; height: 90vw;
         bottom: -20%; right: -20%;
         background: radial-gradient(circle, #4f1d95 0%, transparent 70%);
-        animation: flowBlob 25s infinite alternate-reverse ease-in-out;
+        animation: flowBlob 17s infinite alternate-reverse ease-in-out;
     }
 
     .layer-3 {
         width: 80vw; height: 80vw;
         top: 30%; left: 30%;
         background: radial-gradient(circle, #ff8000 0%, transparent 60%);
-        animation: pulseBlob 15s infinite alternate ease-in-out;
+        animation: flowBlob 12s infinite alternate ease-in-out;
     }
 
     .contact-content-wrapper {
@@ -1372,8 +1371,8 @@
         justify-content: center;
         padding: 0.8rem 2rem;
         border-radius: 100px; 
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(5px);
         font-size: 0.85rem;
         text-transform: uppercase;
@@ -1398,15 +1397,27 @@
 
     @keyframes flowBlob {
         0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(10%, 5%, 0); }
+        100% { transform: translate3d(20%, 13%, 0); }
     }
+
     @keyframes pulseBlob {
-        0% { transform: translate3d(0, 0, 0) scale(1); }
-        100% { transform: translate3d(-5%, 5%, 0) scale(1.1); }
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-10%, 7%, 0); }
     }
     @keyframes nudgeRight { 0% { transform: translate(0, -50%); } 100% { transform: translate(10px, -50%); } }
     @keyframes nudgeLeft { 0% { transform: translate(0, -50%); } 100% { transform: translate(-10px, -50%); } }
 
+    @media (prefers-reduced-motion: reduce) {
+        .layer-1, .layer-2, .layer-3 {
+            animation: none;
+        }
+        *, ::before, ::after {
+            animation-play-state: paused !important;
+        }
+        .fluid-layer {
+            animation: none !important;
+        }
+    }
     /* 스크린 사이즈 설정 */
 
     @media (min-width: 768px) {
@@ -1422,5 +1433,18 @@
         .nav-label { display: none; }
         .modern-arrow { display: none; }
         .contact-button-container { padding: 1.5rem 3rem; }
-        .fluid-layer { filter: blur(30px); opacity: 0.7; }
+        .layer-1 {
+            width: 250vw; height: 250vw; 
+            top: -20%; left: -75%;
+        }
+
+        .layer-2 {
+            width: 250vw; height: 250vw;
+            bottom: -20%; right: -75%;
+        }
+
+        .layer-3 {
+            width: 200vw; height: 200vw;
+            top: 20%; left: -50%;
+        }
     }
