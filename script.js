@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.querySelector('.custom-cursor');
     const interactives = document.querySelectorAll('.interactive, a, button');
     
-    // 1. 호버(마우스) 지원 기기인지 확인
+    // 호버(마우스) 지원 기기인지 확인
     const supportsHover = window.matchMedia("(hover: hover)").matches;
 
     let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
 
-    // 2. 마우스 기기에서만 실행
-    if (supportsHover) {
+    // 마우스 기기에서만 모든 커서 관련 로직 실행
+    if (supportsHover && cursor) {
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
@@ -30,24 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         animateCursor();
-    }
 
-    // 마우스 커서 인터랙티브 요소 반응
-    interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.width = '70px';
-            cursor.style.height = '70px';
-            cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
-            cursor.style.borderColor = 'rgba(255, 77, 0, 0.4)';
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '70px';
+                cursor.style.height = '70px';
+                cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
+                cursor.style.borderColor = 'rgba(255, 77, 0, 0.4)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.backgroundColor = 'transparent';
+                cursor.style.borderColor = 'var(--primary)'; //
+            });
         });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.style.width = '40px';
-            cursor.style.height = '40px';
-            cursor.style.backgroundColor = 'transparent';
-            cursor.style.borderColor = 'var(--primary)';
-        });
-    });
+    } else {
+        if (cursor) cursor.style.display = 'none';
+    }
 
     // --- Navbar 업데이트하고 문의하기 버튼 토글---
 
