@@ -13,7 +13,7 @@
 }
 
 .contact-bg-animation {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -348,5 +348,24 @@ input:user-invalid {
     
     .page-container {
         padding: 120px 1.5rem 3rem;
+    }
+
+    .orb {
+        filter: blur(60px);
+    }
+    
+    .orb-1 {
+        width: 150vw; 
+        height: 150vw;
+    }
+    
+    .orb-2 {
+        width: 180vw; 
+        height: 180vw;
+    }
+    
+    .orb-3 {
+        width: 120vw; 
+        height: 120vw;
     }
 }

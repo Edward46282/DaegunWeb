@@ -39,18 +39,6 @@ a {
 
 /* --- 유틸리티 & 효과 --- */
 
-.grain-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9000;
-    opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
 .custom-cursor {
     width: 40px;
     height: 40px;
@@ -396,7 +384,7 @@ section {
         height: auto;
         padding: 4rem 0;
     }
-    
+
     .stats-content-col {
         gap: 2rem;
     }
@@ -864,6 +852,13 @@ section {
     font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    #services {
+        padding: 3.5rem 0;
+        height: auto;
+    }
 }
 
 /* 서비스 2 섹션 */

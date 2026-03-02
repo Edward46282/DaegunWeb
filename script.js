@@ -27,7 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animateCursor);
     }
 
-    animateCursor();
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    
+    if (!isTouchDevice) {
+        animateCursor();
+    }
 
     // 마우스 커서 인터랙티브 요소 반응
     interactives.forEach(el => {
@@ -240,25 +244,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 서비스 2 스크롤 섹션
 
-    const section = document.querySelector('.horizontal-scroll-section');
-    const track = document.querySelector('.horizontal-track');
-    
-    if (section && track) {
+    const horizontalSection = document.querySelector('.horizontal-scroll-section');
+    const horizontalTrack = document.querySelector('.horizontal-track');
+    let isTicking = false;
+    let maxScroll = 0;
+
+    function updateScrollMetrics() {
+        if (horizontalSection) {
+            maxScroll = horizontalSection.offsetHeight - window.innerHeight;
+        }
+    }
+
+    if (horizontalSection && horizontalTrack) {
+        updateScrollMetrics();
+
+        window.addEventListener('resize', updateScrollMetrics);
+
         window.addEventListener('scroll', () => {
-            const rect = section.getBoundingClientRect();
-            const scrollProgress = -rect.top;
-            const maxScroll = section.offsetHeight - window.innerHeight;
-            
-            if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
-                const percentage = scrollProgress / maxScroll;
-                const moveAmount = percentage * 200; 
-                track.style.transform = `translateX(-${moveAmount}vw)`;
-            } else if (scrollProgress < 0) {
-                track.style.transform = `translateX(0)`;
-            } else {
-                track.style.transform = `translateX(-200vw)`;
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    const rect = horizontalSection.getBoundingClientRect();
+                    const scrollProgress = -rect.top;
+
+                    if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
+                        const percentage = scrollProgress / maxScroll;
+                        const moveAmount = percentage * 200; 
+                        horizontalTrack.style.transform = `translate3d(-${moveAmount}vw, 0, 0)`;
+                    } else if (scrollProgress < 0) {
+                        horizontalTrack.style.transform = `translate3d(0, 0, 0)`;
+                    } else if (scrollProgress > maxScroll) {
+                        horizontalTrack.style.transform = `translate3d(-200vw, 0, 0)`;
+                    }
+
+                    isTicking = false;
+                });
+                isTicking = true;
             }
-        });
+        }, { passive: true });
     }
 
     // 리뷰  캐러셀 
