@@ -392,9 +392,13 @@ section {
 
 /* 모바일 설정 */
 @media (max-width: 768px) {
+    .stats-banner {
+        height: auto;
+        padding: 4rem 0;
+    }
+    
     .stats-content-col {
         gap: 2rem;
-        padding: 4rem 1.5rem; 
     }
     
     .stats-container {
