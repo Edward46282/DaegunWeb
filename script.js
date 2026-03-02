@@ -2,34 +2,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.querySelector('.custom-cursor');
     const interactives = document.querySelectorAll('.interactive, a, button');
     
-    // 마우스 커서 따라오는 변수 설정
-    let mouseX = 0;
-    let mouseY = 0;
-    let cursorX = 0;
-    let cursorY = 0;
+    // 1. 호버(마우스) 지원 기기인지 확인
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
 
-    // 마우스 포지션 업데이트
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
 
-        cursor.style.opacity = 1;
-    });
+    // 2. 마우스 기기에서만 실행
+    if (supportsHover) {
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.opacity = 1;
+        });
 
-    // 마우스 커서 애니메이션 함수
-    function animateCursor() {
-        // lerp 계산: 현재 위치 + (목표 위치 - 현재 위치) * 속도
-        cursorX += (mouseX - cursorX) * 0.5;
-        cursorY += (mouseY - cursorY) * 0.5;
+        function animateCursor() {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
 
-        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-        
-        requestAnimationFrame(animateCursor);
-    }
+            // 3. 마우스가 움직일 때만(0.1px 이상) CSS를 업데이트하여 성능 최적화
+            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                cursorX += dx * 0.5;
+                cursorY += dy * 0.5;
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            }
+            
+            requestAnimationFrame(animateCursor);
+        }
 
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    
-    if (!isTouchDevice) {
         animateCursor();
     }
 
