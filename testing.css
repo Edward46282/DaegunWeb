@@ -14,13 +14,6 @@
     padding: 0;
 }
 
-@media (hover: hover) and (pointer: fine) {
-    * {
-        cursor: none;
-    }
-    .custom-cursor { display: block; }
-}
-
 html {
     scroll-behavior: smooth;
 }
@@ -57,6 +50,13 @@ a {
     transform: translate(-50%, -50%);
     transition: width 0.3s var(--easing), height 0.3s var(--easing), background-color 0.3s, border-color 0.3s;
     opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    * {
+        cursor: none;
+    }
+    .custom-cursor { display: block; }
 }
 
 .material-symbols-outlined {
