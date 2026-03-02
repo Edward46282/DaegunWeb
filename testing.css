@@ -12,7 +12,12 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none; /* 커서 숨김 */
+}
+
+@media (hover: hover) and (pointer: fine) {
+    * {
+        cursor: none;
+    }
 }
 
 html {

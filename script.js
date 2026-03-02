@@ -1,54 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.querySelector('.custom-cursor');
-    const interactives = document.querySelectorAll('.interactive, a, button');
     
-    // 호버(마우스) 지원 기기인지 확인
     const supportsHover = window.matchMedia("(hover: hover)").matches;
+
+    if (!supportsHover || !cursor) {
+        if (cursor) cursor.style.display = 'none';
+        return; 
+    }
 
     let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
 
-    // 마우스 기기에서만 모든 커서 관련 로직 실행
-    if (supportsHover && cursor) {
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.opacity = 1;
-        });
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.opacity = 1;
+    });
 
-        function animateCursor() {
-            const dx = mouseX - cursorX;
-            const dy = mouseY - cursorY;
+    function animateCursor() {
+        const dx = mouseX - cursorX;
+        const dy = mouseY - cursorY;
 
-            // 3. 마우스가 움직일 때만(0.1px 이상) CSS를 업데이트하여 성능 최적화
-            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-                cursorX += dx * 0.5;
-                cursorY += dy * 0.5;
-                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-            }
-            
-            requestAnimationFrame(animateCursor);
+        if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+            // lerp 계산: 현재 위치 + (목표 위치 - 현재 위치) * 속도
+            cursorX += dx * 0.5;
+            cursorY += dy * 0.5;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
         }
-
-        animateCursor();
-
-        interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.width = '70px';
-                cursor.style.height = '70px';
-                cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
-                cursor.style.borderColor = 'rgba(255, 77, 0, 0.4)';
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.style.width = '40px';
-                cursor.style.height = '40px';
-                cursor.style.backgroundColor = 'transparent';
-                cursor.style.borderColor = 'var(--primary)'; //
-            });
-        });
-    } else {
-        if (cursor) cursor.style.display = 'none';
+        requestAnimationFrame(animateCursor);
     }
+
+    animateCursor();
+
+    const interactives = document.querySelectorAll('.interactive, a, button');
+    interactives.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.width = '70px';
+            cursor.style.height = '70px';
+            cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.width = '40px';
+            cursor.style.height = '40px';
+            cursor.style.backgroundColor = 'transparent';
+        });
+    });
 
     // --- Navbar 업데이트하고 문의하기 버튼 토글---
 
