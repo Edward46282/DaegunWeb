@@ -46,14 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Navbar 업데이트 ---
+    // --- Navbar 업데이트하고 문의하기 버튼 토글---
 
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
 
     const observerOptions = {
-        threshold: 0.2,
-        rootMargin: "-10% 0px -10% 0px"
+        threshold: 0, 
+        rootMargin: "-50% 0px -50% 0px"
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -66,6 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if(activeLink) {
                     activeLink.classList.add('active');
+                }
+
+                // "문의하기" 버튼 토글
+                const contactBtn = document.querySelector('.get-started-btn');
+                if (contactBtn) {
+                    if (id === 'contact') {
+                        contactBtn.style.opacity = '0';
+                        contactBtn.style.pointerEvents = 'none';
+                    } else {
+                        contactBtn.style.opacity = '1';
+                        contactBtn.style.pointerEvents = 'auto';
+                    }
                 }
             }
         });
@@ -112,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-        }, { threshold: 0.5 }); // Trigger when 50% visible
+        }, { threshold: 0.5 });
 
         statsObserver.observe(statsSection);
     }
@@ -201,6 +213,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateButtonState();
     }
+
+    // work 제품 할인율 자동 계산
+    function calculateDiscounts() {
+        const productCards = document.querySelectorAll('.project-card');
+
+        productCards.forEach(card => {
+            const originalPriceEl = card.querySelector('.original-price');
+            const discountPriceEl = card.querySelector('.discount-price');
+            const badgeEl = card.querySelector('.discount-badge');
+
+            if (originalPriceEl && discountPriceEl && badgeEl) {
+                
+                const originalPrice = parseInt(originalPriceEl.innerText.replace(/[^0-9]/g, ''), 10);
+                const discountPrice = parseInt(discountPriceEl.innerText.replace(/[^0-9]/g, ''), 10);
+
+                if (originalPrice > 0 && discountPrice >= 0) {
+                    const discountPercentage = Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+                    badgeEl.innerText = `${discountPercentage}% OFF`;
+                }
+            }
+        });
+    }
+
+    calculateDiscounts();
 
     // 서비스 2 스크롤 섹션
 
