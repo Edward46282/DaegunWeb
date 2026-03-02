@@ -18,6 +18,7 @@
     * {
         cursor: none;
     }
+    .custom-cursor { display: block; }
 }
 
 html {
@@ -45,6 +46,7 @@ a {
 /* --- 유틸리티 & 효과 --- */
 
 .custom-cursor {
+    display: none;
     width: 40px;
     height: 40px;
     border: 2px solid var(--primary);
@@ -1407,7 +1409,6 @@ section#horizontal-features.horizontal-scroll-section {
 @media (min-width: 768px) {
     .project-card { width: 600px; }
     .services-grid { grid-template-columns: repeat(3, 1fr); }
-    .custom-cursor { display: block; }
 }
 
 @media (max-width: 768px) {
