@@ -1,49 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.querySelector('.custom-cursor');
-    
     const supportsHover = window.matchMedia("(hover: hover)").matches;
 
-    if (!supportsHover || !cursor) {
-        if (cursor) cursor.style.display = 'none';
-        return; 
-    }
+    // 커서 로직: PC에서만 커서 효과 적용, 모바일에서는 숨김
+    if (supportsHover && cursor) {
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        let isActive = false;
 
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!isActive) {
+                cursor.style.opacity = 1;
+                isActive = true;
+            }
+        });
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.opacity = 1;
-    });
-
-    function animateCursor() {
-        const dx = mouseX - cursorX;
-        const dy = mouseY - cursorY;
-
-        if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        function animateCursor() {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
             // lerp 계산: 현재 위치 + (목표 위치 - 현재 위치) * 속도
-            cursorX += dx * 0.5;
-            cursorY += dy * 0.5;
-            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                cursorX += dx * 0.5;
+                cursorY += dy * 0.5;
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            }
+            requestAnimationFrame(animateCursor);
         }
         requestAnimationFrame(animateCursor);
+
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('.interactive, a, button');
+            if (target) {
+                cursor.style.width = '60px';
+                cursor.style.height = '60px';
+                cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
+                cursor.style.borderColor = 'rgba(255, 77, 0, 0.8)';
+            } else {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.backgroundColor = 'transparent';
+                cursor.style.borderColor = 'var(--primary)';
+            }
+        });
+    } else if (cursor) {
+        cursor.style.display = 'none';
     }
-
-    animateCursor();
-
-    const interactives = document.querySelectorAll('.interactive, a, button');
-    interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.width = '70px';
-            cursor.style.height = '70px';
-            cursor.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
-        });
-        el.addEventListener('mouseleave', () => {
-            cursor.style.width = '40px';
-            cursor.style.height = '40px';
-            cursor.style.backgroundColor = 'transparent';
-        });
-    });
 
     // --- Navbar 업데이트하고 문의하기 버튼 토글---
 
@@ -132,38 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const gallerySection = document.querySelector('#gallery');
     const galleryItems = document.querySelectorAll('.gallery-track .item');
 
+    let lastActiveIndex = -1;
+    let galleryTicking = false;
+
     if (gallerySection && galleryItems.length > 0) {
-        
-        window.addEventListener('scroll', () => {
-            const rect = gallerySection.getBoundingClientRect();
-            const sectionHeight = gallerySection.offsetHeight;
-            const windowHeight = window.innerHeight;
-            
-            // 갤러리 섹션 상단이 현재 뷰 상단에서 얼마나 스크롤되었는지 계산
-            const scrolled = -rect.top;
-            
-            if (scrolled < 0) {
-                updateGallery(0);
-                return;
-            }
-            if (scrolled > (sectionHeight - windowHeight)) {
-                // 유저가 섹션을 지났을 경우 마지막 이미지 표시
-                updateGallery(galleryItems.length - 1);
-                return;
-            }
-
-            // 스크롤시 한계점 계산
-            const totalScrollableDistance = sectionHeight - windowHeight;
-            const stepSize = totalScrollableDistance / galleryItems.length;
-            let activeIndex = Math.floor(scrolled / stepSize);
-
-            if (activeIndex < 0) activeIndex = 0;
-            if (activeIndex >= galleryItems.length) activeIndex = galleryItems.length - 1;
-
-            updateGallery(activeIndex);
-        });
-
-        function updateGallery(activeIndex) {
+        const updateGallery = (activeIndex) => {
             galleryItems.forEach((item, index) => {
                 item.classList.remove('active', 'prev', 'next', 'waiting');
 
@@ -175,7 +150,51 @@ document.addEventListener('DOMContentLoaded', () => {
                     item.classList.add('waiting');
                 }
             });
-        }
+        };
+
+        window.addEventListener('scroll', () => {
+            if (!galleryTicking) {
+                window.requestAnimationFrame(() => {
+                    const rect = gallerySection.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const sectionHeight = gallerySection.offsetHeight;
+                    const scrolled = -rect.top;
+
+                    // 아직 섹션에 진입하지 않은 경우
+                    if (scrolled <= 0) {
+                        if (lastActiveIndex !== 0) {
+                            updateGallery(0);
+                            lastActiveIndex = 0;
+                        }
+                    } 
+                    // 섹션을 완전히 스크롤한 경우
+                    else if (scrolled >= (sectionHeight - windowHeight)) {
+                        const lastIdx = galleryItems.length - 1;
+                        if (lastActiveIndex !== lastIdx) {
+                            updateGallery(lastIdx);
+                            lastActiveIndex = lastIdx;
+                        }
+                    } 
+                    // 섹션과 아직 상호작용중
+                    else {
+                        // 임계점 계산
+                        const totalScrollableDistance = sectionHeight - windowHeight;
+                        const stepSize = totalScrollableDistance / galleryItems.length;
+                        let activeIndex = Math.floor(scrolled / stepSize);
+                        
+                        activeIndex = Math.max(0, Math.min(galleryItems.length - 1, activeIndex));
+
+                        if (activeIndex !== lastActiveIndex) {
+                            updateGallery(activeIndex);
+                            lastActiveIndex = activeIndex;
+                        }
+                    }
+
+                    galleryTicking = false;
+                });
+                galleryTicking = true;
+            }
+        }, { passive: true });
     }
 
     // 네비게이션 버튼으로 work class 캐러셀 스크롤

@@ -52,11 +52,14 @@ a {
     opacity: 0;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) {
     * {
         cursor: none;
     }
-    .custom-cursor { display: block; }
+    .custom-cursor { 
+        display: block; 
+        opacity: 0; 
+    }
 }
 
 .material-symbols-outlined {
@@ -421,12 +424,14 @@ section {
 }
 
 .gallery-sticky-wrapper {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     width: 100%;
     height: 100vh;
     overflow: hidden;
     perspective: 1000px;
+    -webkit-perspective: 1000px;
 }
 
 #gallery .section-header {
@@ -598,6 +603,11 @@ section {
     overflow-x: auto;
     align-items: center;
     padding-bottom: 3rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.work-carousel::-webkit-scrollbar {
+    display: none; 
 }
 
 .project-card {
