@@ -7,7 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
         let isActive = false;
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('pointermove', (e) => {
+            if (e.pointerType === 'touch') {
+                cursor.style.opacity = 0;
+                isActive = false;
+                return; 
+            }
+
             mouseX = e.clientX;
             mouseY = e.clientY;
             if (!isActive) {
