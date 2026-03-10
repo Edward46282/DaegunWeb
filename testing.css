@@ -24,6 +24,7 @@ body {
     font-family: var(--font-main);
     overflow-x: clip;
     width: 100%;
+    scroll-behavior: smooth;
 }
 
 body, p, h1, h2, h3, h4, h5, h6 {
@@ -1004,6 +1005,9 @@ section#horizontal-features.horizontal-scroll-section {
         max-width: 100%;
         aspect-ratio: 4/3;
         object-fit: cover;
+    }
+    .h-panel {
+        height: 100dvh;
     }
 }
 
