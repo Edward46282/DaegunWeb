@@ -554,7 +554,7 @@ section {
 @media (max-width: 768px) {
     .gallery-track .item {
         width: 95%;
-        height: 70%;
+        height: 79%;
     }
     #gallery .section-header {
         top: 90px; 
