@@ -417,7 +417,7 @@ section {
 
 /* --- 갤러리 섹션 --- */
 #gallery {
-    height: 400vh;
+    height: 500vh;
     position: relative;
     padding: 0;
     background-color: var(--bg-dark);
@@ -553,9 +553,15 @@ section {
 }
 
 @media (max-width: 768px) {
+    #gallery {
+        height: 600dvh;
+    }
     .gallery-track .item {
         width: 95%;
         height: 79%;
+    }
+    .gallery-track .item .content {
+        bottom: 25%;
     }
     #gallery .section-header {
         top: 90px; 
