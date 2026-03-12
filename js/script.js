@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.querySelector('.next-btn');
     const prevBtn = document.querySelector('.prev-btn');
 
-    const scrollAmount = 370; 
+    const scrollAmount = 400; 
 
     if (carousel && nextBtn && prevBtn) {
         const updateButtonState = () => {
@@ -253,7 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const discountPrice = parseInt(discountPriceEl.innerText.replace(/[^0-9]/g, ''), 10);
 
                 if (originalPrice > 0 && discountPrice >= 0) {
-                    const discountPercentage = Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+                    // 할인율을 극대화하기 위해 올림 방식의 할인율 공식을 사용
+                    const discountPercentage = Math.ceil(((originalPrice - discountPrice) / originalPrice) * 100);
                     badgeEl.innerText = `${discountPercentage}% OFF`;
                 }
             }
@@ -266,25 +267,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const horizontalSection = document.querySelector('.horizontal-scroll-section');
     const horizontalTrack = document.querySelector('.horizontal-track');
-    let isTicking = false;
-    let maxScroll = 0;
-
-    function updateScrollMetrics() {
-        if (horizontalSection) {
-            maxScroll = horizontalSection.offsetHeight - window.innerHeight;
-        }
-    }
 
     if (horizontalSection && horizontalTrack) {
+        let isTicking = false;
+        let sectionTop = 0;
+        let maxScroll = 0;
+        let resizeTimeout;
+        let isMobile = window.innerWidth <= 900;
+
+        function updateScrollMetrics() {
+            isMobile = window.innerWidth <= 900;
+            
+            if (isMobile) {
+                horizontalTrack.style.transform = 'none';
+                return;
+            }
+            
+            sectionTop = horizontalSection.offsetTop;
+            const stickyContainer = horizontalSection.querySelector('.sticky-container');
+            const stickyHeight = stickyContainer ? stickyContainer.offsetHeight : window.innerHeight;
+            maxScroll = horizontalSection.offsetHeight - stickyHeight;
+        }
+
         updateScrollMetrics();
 
-        window.addEventListener('resize', updateScrollMetrics);
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateScrollMetrics, 150);
+        });
 
         window.addEventListener('scroll', () => {
+            if (isMobile) return; 
+
             if (!isTicking) {
                 window.requestAnimationFrame(() => {
-                    const rect = horizontalSection.getBoundingClientRect();
-                    const scrollProgress = -rect.top;
+                    const currentScroll = window.scrollY;
+                    const scrollProgress = currentScroll - sectionTop;
 
                     if (scrollProgress >= 0 && scrollProgress <= maxScroll) {
                         const percentage = scrollProgress / maxScroll;

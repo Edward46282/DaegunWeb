@@ -554,7 +554,8 @@ section {
 
 @media (max-width: 768px) {
     #gallery {
-        height: 600dvh;
+        height: 600vh;
+        margin-bottom: 4rem;
     }
     .gallery-track .item {
         width: 95%;
@@ -728,6 +729,9 @@ section {
 }
 
 @media (max-width: 768px) {
+    .project-card {
+        width: 78vw;
+    }
     .click-disclaimer {
         font-size: 0.75rem;
         margin-top: 1rem;
@@ -917,7 +921,8 @@ section#horizontal-features.horizontal-scroll-section {
 
 .h-panel {
     width: 90vw;
-    height: 100vh;
+    height: 90vh;
+    margin-top: 9vh;
     margin-left: 5vw;
     display: flex;
     align-items: center;
@@ -937,7 +942,7 @@ section#horizontal-features.horizontal-scroll-section {
     justify-content: space-between;
     max-width: 1400px;
     width: 100%;
-    padding: 0 clamp(2rem, 5vw, 6rem);
+    padding: 3rem clamp(2rem, 5vw, 6rem);
     gap: 4rem;
 }
 
@@ -983,6 +988,7 @@ section#horizontal-features.horizontal-scroll-section {
 .image-box img {
     width: 100%;
     max-width: 600px;
+    max-height: 80vh;
     height: auto;
     aspect-ratio: 4/5;
     object-fit: cover;
@@ -992,28 +998,64 @@ section#horizontal-features.horizontal-scroll-section {
 
 /* 모바일 반응형 처리 */
 @media (max-width: 900px) {
+    section#horizontal-features.horizontal-scroll-section {
+        height: auto;
+        padding: 2rem 1rem;
+    }
+    
+    .sticky-container {
+        position: relative;
+        height: auto;
+    }
+    
+    .horizontal-track {
+        flex-direction: column;
+        width: 100%; 
+        gap: 2rem; 
+        transform: none !important;
+    }
+    
+    .h-panel {
+        height: 100vh;
+        width: 100%;
+        margin-left: 0;
+        height: auto; 
+        border-radius: 30px;
+        overflow: hidden;
+    }
+    
     .panel-inner {
-        flex-direction: column-reverse;
+        flex-direction: column;
         text-align: left;
-        gap: 1.5rem;
-        padding: 1.3rem 0;
+        gap: 2rem;
+        padding: 4rem 1.5rem;
     }
+
+    .text-box {
+        width: 100%;
+    }
+    
     .big-number {
+        text-align: center;
         font-size: 6rem;
-        margin-bottom: 1.8rem;
+        margin-bottom: 4rem;
     }
+
+    .panel-title, .panel-desc {
+        width: 100%;
+        text-align: left;
+    }
+    
     .image-box {
         justify-content: center;
-        width: 97%;
+        width: 100%;
     }
+    
     .image-box img {
         width: 100%;
         max-width: 100%;
         aspect-ratio: 4/3;
         object-fit: cover;
-    }
-    .h-panel {
-        height: 100dvh;
     }
 }
 
